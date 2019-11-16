@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Media, Card, CardTitle, CardDeck, CardBody, Row, Col } from 'reactstrap';
+import _ from 'lodash';
+import { CardDeck, Row, Col, Alert } from 'reactstrap';
 import AppContainer from '../components/layout/AppContainer';
 import InputContainer from '../components/form/InputContainer';
 import useGetCharacters from '../grapql/useGetCharacters';
+import CharacterCard from './components/CharacterCard';
 
 function CharacterList() {
+    const [searchTerms, setSearchTerms] = useState(``);
     const [characters, setCharacters] = useState([]);
     const { loading, data } = useGetCharacters();
 
@@ -16,6 +19,7 @@ function CharacterList() {
     }, [data]);
 
     function search(event) {
+        setSearchTerms(event.target.value);
         const regexp = new RegExp(event.target.value, 'i');
         setCharacters(
             data.characters.filter((character) => {
@@ -32,8 +36,8 @@ function CharacterList() {
                 <InputContainer
                     onChange={search}
                     name="search"
-                    id="search"
                     label="Search"
+                    value={searchTerms}
                     placeholder="Search Characters"
                     showlabel={false}
                     style={{ width: '250px', float: 'right' }}
@@ -45,26 +49,15 @@ function CharacterList() {
                         {characters.map((character) => (
                             <Col lg={4} md={4} sm={12} xl={3} key={character.id}>
                                 <Link to={`/character/${character.id}`}>
-                                    <Card
-                                        style={{
-                                            width: '275px',
-                                            marginBottom: '30px',
-                                            marginLeft: '0px',
-                                            marginRight: '0px'
-                                        }}>
-                                        <Media
-                                            object
-                                            src={character.thumbnail}
-                                            style={{ maxWidth: '275px', height: '275px' }}
-                                            alt={character.name}
-                                        />
-                                        <CardBody>
-                                            <CardTitle>{character.name}</CardTitle>
-                                        </CardBody>
-                                    </Card>
+                                    <CharacterCard character={character} />
                                 </Link>
                             </Col>
                         ))}
+                        {_.isEmpty(characters) && (
+                            <Col md={12}>
+                                <Alert color="secondary">No records found!</Alert>
+                            </Col>
+                        )}
                     </Row>
                 </CardDeck>
             )}

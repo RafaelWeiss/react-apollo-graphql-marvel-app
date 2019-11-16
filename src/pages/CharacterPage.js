@@ -1,33 +1,15 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import Yup from 'yup';
-import {
-    Media,
-    Jumbotron,
-    Row,
-    Col,
-    Form,
-    FormGroup,
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    ListGroup,
-    ListGroupItem
-} from 'reactstrap';
+import { Media, Jumbotron, Row, Col, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import AppContainer from '../components/layout/AppContainer';
-import InputContainer from '../components/form/InputContainer';
-import ButtonContainer from '../components/form/ButtonContainer';
+import CharacterForm from './components/CharacterForm';
 import useGetCharacterById from '../grapql/useGetCharacterById';
-import useSaveCharacter from '../grapql/useSaveCharacter';
 
 function CharacterPage(props) {
     const { match } = props;
     const [modal, setModal] = useState(false);
     const { loading, data } = useGetCharacterById({ id: match.params.id });
-    const [saveCharacter] = useSaveCharacter();
     const toggle = () => setModal(!modal);
 
     let character = null;
@@ -36,7 +18,13 @@ function CharacterPage(props) {
     }
 
     return (
-        <AppContainer loading={loading}>
+        <AppContainer
+            loading={loading}
+            customComponent={
+                <Link to="/" style={{ float: 'right' }}>
+                    &lt; back
+                </Link>
+            }>
             {data && (
                 <>
                     <Jumbotron
@@ -76,65 +64,7 @@ function CharacterPage(props) {
                             </Col>
                         </Row>
                     </Jumbotron>
-
-                    <Formik
-                        initialValues={{
-                            key: character.id,
-                            name: character.name,
-                            description: character.description
-                        }}
-                        onSubmit={(values) => {
-                            saveCharacter({
-                                variables: values
-                            });
-                        }}
-                        validationSchema={Yup.object().shape({
-                            name: Yup.string().required()
-                        })}>
-                        {({ values, errors, handleChange, handleSubmit }) => {
-                            return (
-                                <Form>
-                                    <Modal isOpen={modal} toggle={toggle}>
-                                        <ModalHeader toggle={toggle}>Edit Character</ModalHeader>
-                                        <ModalBody>
-                                            <FormGroup>
-                                                <InputContainer
-                                                    value={values.name}
-                                                    onChange={handleChange}
-                                                    required
-                                                    errors={errors.name}
-                                                    name="name"
-                                                    placeholder="name"
-                                                />
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <InputContainer
-                                                    value={values.description}
-                                                    onChange={handleChange}
-                                                    required
-                                                    errors={errors.description}
-                                                    name="description"
-                                                    placeholder="description"
-                                                />
-                                            </FormGroup>
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <ButtonContainer
-                                                color="primary"
-                                                onClick={handleSubmit}
-                                                label="Save"
-                                            />
-                                            <ButtonContainer
-                                                color="secondary"
-                                                onClick={toggle}
-                                                label="Close"
-                                            />
-                                        </ModalFooter>
-                                    </Modal>
-                                </Form>
-                            );
-                        }}
-                    </Formik>
+                    <CharacterForm character={character} modal={modal} toggle={toggle} />
                 </>
             )}
         </AppContainer>

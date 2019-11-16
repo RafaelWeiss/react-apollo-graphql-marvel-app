@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navbar, NavbarBrand } from 'reactstrap';
+
 import AppLoading from './AppLoading';
 
 const AppContainer = (props) => {
