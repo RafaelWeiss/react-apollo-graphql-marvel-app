@@ -8,7 +8,14 @@
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", 4],
         "react/jsx-closing-bracket-location": "off",
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/no-array-index-key": "off",
+        "react/jsx-wrap-multilines": ["error", { "declaration": false, "assignment": false }],
+        "react/jsx-props-no-spreading": "off"
     },
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": {
+        "window": true,
+        "document": true
+    }
 }

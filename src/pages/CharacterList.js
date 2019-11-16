@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import { Input, Card, CardImg, CardTitle, CardDeck, CardBody, Row, Col } from 'reactstrap';
+import { Media, Card, CardTitle, CardDeck, CardBody, Row, Col } from 'reactstrap';
 import AppContainer from '../components/layout/AppContainer';
+import InputContainer from '../components/form/InputContainer';
+import useGetCharacters from '../grapql/useGetCharacters';
 
 function CharacterList() {
     const [characters, setCharacters] = useState([]);
-
-    const GET_CHARACTERS = gql`
-        query GetCharacters {
-            characters {
-                id
-                name
-                thumbnail
-            }
-        }
-    `;
-
-    const { loading, data } = useQuery(GET_CHARACTERS);
+    const { loading, data } = useGetCharacters();
 
     React.useEffect(() => {
         if (data) {
@@ -40,25 +29,33 @@ function CharacterList() {
         <AppContainer
             loading={loading}
             customComponent={
-                <Input
-                    type="text"
+                <InputContainer
+                    onChange={search}
                     name="search"
                     id="search"
-                    placeholder="search"
-                    onChange={search}
+                    label="Search"
+                    placeholder="Search Characters"
+                    showlabel={false}
+                    style={{ width: '250px', float: 'right' }}
                 />
             }>
             {data && (
                 <CardDeck>
-                    <Row>
+                    <Row style={{ width: '100%', marginLeft: '0px' }}>
                         {characters.map((character) => (
-                            <Col sm={3} key={character.id}>
+                            <Col lg={4} md={4} sm={12} xl={3} key={character.id}>
                                 <Link to={`/character/${character.id}`}>
-                                    <Card>
-                                        <CardImg
-                                            top
-                                            width="100%"
+                                    <Card
+                                        style={{
+                                            width: '275px',
+                                            marginBottom: '30px',
+                                            marginLeft: '0px',
+                                            marginRight: '0px'
+                                        }}>
+                                        <Media
+                                            object
                                             src={character.thumbnail}
+                                            style={{ maxWidth: '275px', height: '275px' }}
                                             alt={character.name}
                                         />
                                         <CardBody>
