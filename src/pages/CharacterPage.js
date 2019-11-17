@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Media, Jumbotron, Row, Col, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { Jumbotron, Row, Col, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import i18n from '../i18n';
 import AppContainer from '../components/layout/AppContainer';
+import ImageContainer from '../components/layout/ImageContainer';
 import CharacterForm from './components/CharacterForm';
-import useGetCharacterById from '../grapql/useGetCharacterById';
+import useGetCharacterById from '../graphql/useGetCharacterById';
 
 function CharacterPage(props) {
     const { match } = props;
@@ -16,7 +18,7 @@ function CharacterPage(props) {
     if (!loading) {
         character = data ? data.characters[0] : {};
     }
-
+    console.log('Character', character);
     return (
         <AppContainer
             loading={loading}
@@ -25,7 +27,7 @@ function CharacterPage(props) {
                     &lt; back
                 </Link>
             }>
-            {data && (
+            {character && (
                 <>
                     <Jumbotron
                         style={{
@@ -33,8 +35,7 @@ function CharacterPage(props) {
                         }}>
                         <Row>
                             <Col lg={4} md={12} sm={12} xs={12}>
-                                <Media
-                                    object
+                                <ImageContainer
                                     src={character.thumbnail}
                                     style={{ maxWidth: 350 }}
                                     alt={character.name}
@@ -45,22 +46,14 @@ function CharacterPage(props) {
                                     color="secondary"
                                     onClick={toggle}
                                     style={{ display: 'inline', float: 'right' }}>
-                                    Edit
+                                    {i18n.t('button.edit')}
                                 </Button>
                                 <h1 className="display-3">{character.name}</h1>
                                 <hr className="my-2" />
                                 <p>{character.description}</p>
                                 <p className="lead">&nbsp;</p>
-                                <h3 className="display-8">:: Series</h3>
-                                <ListGroup>
-                                    {character.series.map((serie, i) => {
-                                        return (
-                                            <ListGroupItem key={`serie_${i}`}>
-                                                {serie.name}
-                                            </ListGroupItem>
-                                        );
-                                    })}
-                                </ListGroup>
+
+                                <CharacterSeries character={character} />
                             </Col>
                         </Row>
                     </Jumbotron>
@@ -70,6 +63,24 @@ function CharacterPage(props) {
         </AppContainer>
     );
 }
+
+function CharacterSeries(props) {
+    const { character } = props;
+    return (
+        <>
+            <h3 className="display-8">:: Series</h3>
+            <ListGroup>
+                {character.series.map((serie, i) => {
+                    return <ListGroupItem key={`serie_${i}`}>{serie.name}</ListGroupItem>;
+                })}
+            </ListGroup>
+        </>
+    );
+}
+
+CharacterSeries.propTypes = {
+    character: PropTypes.object.isRequired
+};
 
 CharacterPage.propTypes = {
     match: PropTypes.object.isRequired

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { CardDeck, Row, Col, Alert } from 'reactstrap';
 import AppContainer from '../components/layout/AppContainer';
 import InputContainer from '../components/form/InputContainer';
-import useGetCharacters from '../grapql/useGetCharacters';
+import useGetCharacters from '../graphql/useGetCharacters';
 import CharacterCard from './components/CharacterCard';
 
 function CharacterList() {
@@ -43,7 +43,7 @@ function CharacterList() {
                     style={{ width: '250px', float: 'right' }}
                 />
             }>
-            {data && (
+            {characters && (
                 <CardDeck>
                     <Row style={{ width: '100%', marginLeft: '0px' }}>
                         {characters.map((character) => (

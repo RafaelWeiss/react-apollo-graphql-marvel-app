@@ -6,7 +6,7 @@ import { Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'rea
 import { toast } from 'react-toastify';
 import InputContainer from '../../components/form/InputContainer';
 import ButtonContainer from '../../components/form/ButtonContainer';
-import useSaveCharacter from '../../grapql/useSaveCharacter';
+import useSaveCharacter from '../../graphql/useSaveCharacter';
 
 function CharacterForm(props) {
     const { character, modal, toggle } = props;

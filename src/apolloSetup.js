@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { RetryLink } from 'apollo-link-retry';
 import { persistCache } from 'apollo-cache-persist';
-import resolvers from './grapql/resolvers';
+import resolvers from './graphql/resolvers';
 
 const apolloSetup = () => {
     const retry = new RetryLink({ attempts: { max: Infinity } });

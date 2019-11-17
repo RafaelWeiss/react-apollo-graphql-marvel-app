@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
-export const query = gql`
+export const GET_CHARACTERS = gql`
     query GetCharacters {
         characters {
             id
@@ -11,4 +11,4 @@ export const query = gql`
     }
 `;
 
-export default () => useQuery(query);
+export default () => useQuery(GET_CHARACTERS);

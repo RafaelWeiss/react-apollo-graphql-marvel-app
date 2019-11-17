@@ -8,6 +8,7 @@ import apolloSetup from './apolloSetup';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import './index.css';
 
 const { waitOnCache, client } = apolloSetup();

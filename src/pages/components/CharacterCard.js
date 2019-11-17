@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media, Card, CardTitle, CardBody } from 'reactstrap';
+import { Card, CardTitle, CardBody } from 'reactstrap';
+import ImageContainer from '../../components/layout/ImageContainer';
 
 function CharacterCard(props) {
     const { character } = props;
@@ -12,9 +13,10 @@ function CharacterCard(props) {
                 marginLeft: '0px',
                 marginRight: '0px'
             }}>
-            <Media
-                object
+            <ImageContainer
                 src={character.thumbnail}
+                width="275"
+                height="275"
                 style={{ maxWidth: '275px', height: '275px' }}
                 alt={character.name}
             />

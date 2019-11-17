@@ -4,11 +4,23 @@ import { Label, Input, FormFeedback } from 'reactstrap';
 
 class InputContainer extends PureComponent {
     render() {
-        const { label, name, value, onChange, errors, showlabel, ...rest } = this.props;
+        const { label, name, value, onChange, errors, showlabel, required, ...rest } = this.props;
         return (
             <>
-                {showlabel === true && <Label for={name}>{label}</Label>}
-                <Input name={name} value={value} onChange={onChange} invalid={!!errors} {...rest} />
+                {showlabel === true && (
+                    <Label for={name}>
+                        {label}
+                        {required ? '*' : ''}
+                    </Label>
+                )}
+                <Input
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    invalid={!!errors}
+                    required={required}
+                    {...rest}
+                />
                 <FormFeedback>required</FormFeedback>
             </>
         );
@@ -17,6 +29,7 @@ class InputContainer extends PureComponent {
 
 InputContainer.defaultProps = {
     showlabel: true,
+    required: true,
     label: null,
     value: null,
     errors: null
@@ -28,7 +41,8 @@ InputContainer.propTypes = {
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.any,
-    showlabel: PropTypes.bool
+    showlabel: PropTypes.bool,
+    required: PropTypes.bool
 };
 
 export default InputContainer;

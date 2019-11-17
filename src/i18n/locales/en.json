@@ -1,0 +1,17 @@
+{
+  "label": {
+    "name": "Name",
+    "description":"Description",
+    "edit.characters": "Edit Characters"
+  },
+  "button": {
+    "save": "Save",
+    "edit": "Edit",
+    "cancel": "Cancel"
+
+  },
+  "msg": {
+  },
+  "placeholder": {
+  }
+}
