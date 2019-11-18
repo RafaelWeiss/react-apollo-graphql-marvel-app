@@ -16,7 +16,7 @@ A App created by using:
 ## Api GraphQL
 
 App created using Api GraphQL da Marvel:
-- [https://api.marvelql.com/]https://api.marvelql.com/
+- [https://api.marvelql.com/](https://api.marvelql.com/)
 
 ## Installing
 
