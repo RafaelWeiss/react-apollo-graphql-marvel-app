@@ -13,7 +13,7 @@ A App created by using:
 - Reactstrap
 - Testing Library with Apollo MockProvider
 
-## Api GrapHQL
+## Api GraphQL
 
 App created using Api GraphQL da Marvel:
 - [https://api.marvelql.com/]https://api.marvelql.com/
