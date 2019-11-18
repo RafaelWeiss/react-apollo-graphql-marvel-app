@@ -8,7 +8,7 @@ const AppContainer = (props) => {
     const { loading, children, customComponent } = props;
 
     return (
-        <>
+        <div className="app-container">
             <Navbar color="light" light expand="md" fixed="top" className="navBar">
                 <NavbarBrand href="/" style={{ marginTop: '5px' }}>
                     {i18n.t('title.appName')}
@@ -16,7 +16,7 @@ const AppContainer = (props) => {
                 <div style={{ width: '100%' }}>{customComponent}</div>
             </Navbar>
             <div className="app">{loading ? <LoadingContainer /> : children}</div>
-        </>
+        </div>
     );
 };
 

@@ -59,7 +59,7 @@ function CharacterPage(props) {
 function CharacterInfo(props) {
     const { character, toggle } = props;
     return (
-        <Row>
+        <Row style={{ width: '100%' }}>
             <Col lg={4} md={12} sm={12} xs={12} className="jumbotron-item-image-container">
                 <ImageContainer
                     src={character.thumbnail}
