@@ -109,7 +109,7 @@ function CharacterForm(props) {
             validationSchema={Yup.object().shape({
                 name: Yup.string().required(i18n.t('msg.requiredField'))
             })}>
-            {({ values, errors, handleChange, handleSubmit }) => {
+            {({ values, errors, handleChange, handleSubmit, isSubmitting }) => {
                 return (
                     <Form>
                         <Modal isOpen={modal} toggle={toggle}>
@@ -142,6 +142,7 @@ function CharacterForm(props) {
                             <ModalFooter>
                                 <ButtonContainer
                                     color="primary"
+                                    disabled={isSubmitting}
                                     onClick={handleSubmit}
                                     label={i18n.t('button.save')}
                                 />
