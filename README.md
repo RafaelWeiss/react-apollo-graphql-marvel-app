@@ -1,14 +1,17 @@
 ## react-apollo-graphql-marvel-app
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-A simple example with React, GraphQL, React Apollo and Formik.
+A example with React, GraphQL, React Apollo, Formik, Testing Library with Apollo MockProvider.
 
 ## Page
 
 A page created by using: 
 - React
 - React-Apollo
+- GraphQL
 - Formik
+- Reactstrap
+- Testing Library with Apollo MockProvider
 
 ## Installing
 
@@ -44,7 +47,7 @@ npm test
 
 ## Versions
 
-v0.1
+v1.0
 
 -   Default project implementation
 

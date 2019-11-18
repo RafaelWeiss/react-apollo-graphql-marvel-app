@@ -1,17 +1,27 @@
 {
   "label": {
     "name": "Name",
-    "description":"Description",
-    "edit.characters": "Edit Characters"
+    "description":"Description"    
   },
   "button": {
     "save": "Save",
+    "close": "Close",
     "edit": "Edit",
-    "cancel": "Cancel"
-
+    "cancel": "Cancel",
+    "goBack": "Go Back"
   },
   "msg": {
+    "noRecordsFound": "No characters found",
+    "noSeriesFound": "No series found",
+    "saveSuccess" : "Successfully saved character",
+    "requiredField" : "Required field"
   },
   "placeholder": {
+    "searchCharacters" : "Search Characters"
+  },
+  "title": {
+    "editCharacter": "Edit Character",
+    "series": ":: Series",
+    "appName": "Marvel App"
   }
 }

@@ -1,13 +1,67 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+    line-height: 1;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.app {
+    margin-top: 70px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.navBar {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.card-item {
+    border: 0px;
+    border-radius: 2%;
+    background-color: #3276b1;
+    color: #ffffff;
+    width: 275px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 30px !Important;
+    text-decoration-style: none !important;
+    font-size: 19px !Important;
+}
+
+.card-item-image {
+    max-width: 275px;
+    height: 275px;
+    border-radius: 2%;
+}
+.card-deck a:hover {
+    text-decoration: none !important;
+}
+
+.jumbotron-item {
+    background-color: #3276b1;
+    padding: 2rem 2rem;
+}
+
+.jumbotron-item-image {
+    max-width: 350px;
+    border-radius: 2%;
+    margin-bottom: 10px;
+}
+.jumbotron-item-image-container {
+    background-color: #ffffff;
+}
+
+.fontWhite {
+    color: #ffffff;
+}
+.borderWhite {
+    border-color: #ffffff;
 }

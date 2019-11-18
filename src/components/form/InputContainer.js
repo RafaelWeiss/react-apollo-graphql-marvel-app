@@ -21,7 +21,7 @@ class InputContainer extends PureComponent {
                     required={required}
                     {...rest}
                 />
-                <FormFeedback>required</FormFeedback>
+                {errors && <FormFeedback>{errors}</FormFeedback>}
             </>
         );
     }

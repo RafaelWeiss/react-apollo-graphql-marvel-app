@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Jumbotron, Row, Col, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
+import {
+    Jumbotron,
+    Row,
+    Col,
+    Button,
+    ListGroup,
+    ListGroupItem,
+    Form,
+    FormGroup,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
+} from 'reactstrap';
+import { Formik } from 'formik';
+import Yup from 'yup';
+import { toast } from 'react-toastify';
 import i18n from '../i18n';
 import AppContainer from '../components/layout/AppContainer';
 import ImageContainer from '../components/layout/ImageContainer';
-import CharacterForm from './components/CharacterForm';
+import InputContainer from '../components/form/InputContainer';
+import ButtonContainer from '../components/form/ButtonContainer';
 import useGetCharacterById from '../graphql/useGetCharacterById';
+import useSaveCharacter from '../graphql/useSaveCharacter';
 
 function CharacterPage(props) {
     const { match } = props;
@@ -18,49 +37,126 @@ function CharacterPage(props) {
     if (!loading) {
         character = data ? data.characters[0] : {};
     }
-    console.log('Character', character);
     return (
         <AppContainer
             loading={loading}
             customComponent={
                 <Link to="/" style={{ float: 'right' }}>
-                    &lt; back
+                    &lt;&nbsp;
+                    {i18n.t('button.goBack')}
                 </Link>
             }>
             {character && (
                 <>
-                    <Jumbotron
-                        style={{
-                            padding: '2rem 2rem'
-                        }}>
-                        <Row>
-                            <Col lg={4} md={12} sm={12} xs={12}>
-                                <ImageContainer
-                                    src={character.thumbnail}
-                                    style={{ maxWidth: 350 }}
-                                    alt={character.name}
-                                />
-                            </Col>
-                            <Col>
-                                <Button
-                                    color="secondary"
-                                    onClick={toggle}
-                                    style={{ display: 'inline', float: 'right' }}>
-                                    {i18n.t('button.edit')}
-                                </Button>
-                                <h1 className="display-3">{character.name}</h1>
-                                <hr className="my-2" />
-                                <p>{character.description}</p>
-                                <p className="lead">&nbsp;</p>
-
-                                <CharacterSeries character={character} />
-                            </Col>
-                        </Row>
-                    </Jumbotron>
-                    <CharacterForm character={character} modal={modal} toggle={toggle} />
+                    <CharacterInfo character={character} toggle={toggle} />
+                    <CharacterForm character={character} toggle={toggle} modal={modal} />
                 </>
             )}
         </AppContainer>
+    );
+}
+
+function CharacterInfo(props) {
+    const { character, toggle } = props;
+    return (
+        <Row>
+            <Col lg={4} md={12} sm={12} xs={12} className="jumbotron-item-image-container">
+                <ImageContainer
+                    src={character.thumbnail}
+                    className="jumbotron-item-image"
+                    alt={character.name}
+                />
+            </Col>
+            <Col>
+                <Jumbotron className="jumbotron-item">
+                    <Button
+                        color="secondary"
+                        onClick={toggle}
+                        style={{ display: 'inline', float: 'right' }}>
+                        {i18n.t('button.edit')}
+                    </Button>
+                    <h1 className="display-3 fontWhite">{character.name}</h1>
+                    <hr className="my-2 borderWhite" />
+                    <p className="fontWhite">{character.description}</p>
+                    <p className="lead fontWhite">&nbsp;</p>
+                    <CharacterSeries character={character} />
+                </Jumbotron>
+            </Col>
+        </Row>
+    );
+}
+
+function CharacterForm(props) {
+    const { character, modal, toggle } = props;
+    const [saveCharacter] = useSaveCharacter();
+    return (
+        <Formik
+            initialValues={{
+                key: character.id,
+                name: character.name,
+                description: character.description
+            }}
+            onSubmit={(values) => {
+                saveCharacter({
+                    variables: values
+                }).then(() => {
+                    toast.success(i18n.t('msg.saveSuccess'), {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                    toggle();
+                });
+            }}
+            validationSchema={Yup.object().shape({
+                name: Yup.string().required(i18n.t('msg.requiredField'))
+            })}>
+            {({ values, errors, handleChange, handleSubmit }) => {
+                return (
+                    <Form>
+                        <Modal isOpen={modal} toggle={toggle}>
+                            <ModalHeader toggle={toggle}>
+                                {i18n.t('title.editCharacter')}
+                            </ModalHeader>
+                            <ModalBody>
+                                <FormGroup>
+                                    <InputContainer
+                                        label={i18n.t('label.name')}
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        required
+                                        errors={errors.name}
+                                        name="name"
+                                        placeholder="name"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <InputContainer
+                                        value={values.description}
+                                        onChange={handleChange}
+                                        required
+                                        errors={errors.description}
+                                        label={i18n.t('label.description')}
+                                        name="description"
+                                        placeholder="description"
+                                    />
+                                </FormGroup>
+                            </ModalBody>
+                            <ModalFooter>
+                                <ButtonContainer
+                                    color="primary"
+                                    onClick={handleSubmit}
+                                    label={i18n.t('button.save')}
+                                />
+                                <ButtonContainer
+                                    color="secondary"
+                                    onClick={toggle}
+                                    label={i18n.t('button.close')}
+                                />
+                            </ModalFooter>
+                        </Modal>
+                    </Form>
+                );
+            }}
+        </Formik>
     );
 }
 
@@ -68,22 +164,36 @@ function CharacterSeries(props) {
     const { character } = props;
     return (
         <>
-            <h3 className="display-8">:: Series</h3>
+            <h3 className="fontWhite">{i18n.t('title.series')}</h3>
             <ListGroup>
                 {character.series.map((serie, i) => {
                     return <ListGroupItem key={`serie_${i}`}>{serie.name}</ListGroupItem>;
                 })}
+                {_.isEmpty(character.series) && (
+                    <ListGroupItem>{i18n.t('msg.noSeriesFound')}</ListGroupItem>
+                )}
             </ListGroup>
         </>
     );
 }
 
-CharacterSeries.propTypes = {
-    character: PropTypes.object.isRequired
-};
-
 CharacterPage.propTypes = {
     match: PropTypes.object.isRequired
+};
+
+CharacterInfo.propTypes = {
+    character: PropTypes.object.isRequired,
+    toggle: PropTypes.func.isRequired
+};
+
+CharacterForm.propTypes = {
+    character: PropTypes.object.isRequired,
+    modal: PropTypes.bool.isRequired,
+    toggle: PropTypes.func.isRequired
+};
+
+CharacterSeries.propTypes = {
+    character: PropTypes.object.isRequired
 };
 
 export default CharacterPage;

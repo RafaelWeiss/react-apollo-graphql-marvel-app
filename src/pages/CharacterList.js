@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import { CardDeck, Row, Col, Alert } from 'reactstrap';
+import { CardDeck, Row, Col, Alert, Card, CardTitle, CardBody } from 'reactstrap';
+import i18n from '../i18n';
 import AppContainer from '../components/layout/AppContainer';
 import InputContainer from '../components/form/InputContainer';
+import ImageContainer from '../components/layout/ImageContainer';
 import useGetCharacters from '../graphql/useGetCharacters';
-import CharacterCard from './components/CharacterCard';
 
 function CharacterList() {
     const [searchTerms, setSearchTerms] = useState(``);
@@ -38,14 +40,14 @@ function CharacterList() {
                     name="search"
                     label="Search"
                     value={searchTerms}
-                    placeholder="Search Characters"
+                    placeholder={i18n.t('placeholder.searchCharacters')}
                     showlabel={false}
                     style={{ width: '250px', float: 'right' }}
                 />
             }>
             {characters && (
                 <CardDeck>
-                    <Row style={{ width: '100%', marginLeft: '0px' }}>
+                    <Row style={{ width: '100%' }}>
                         {characters.map((character) => (
                             <Col lg={4} md={4} sm={12} xl={3} key={character.id}>
                                 <Link to={`/character/${character.id}`}>
@@ -55,7 +57,7 @@ function CharacterList() {
                         ))}
                         {_.isEmpty(characters) && (
                             <Col md={12}>
-                                <Alert color="secondary">No records found!</Alert>
+                                <Alert color="secondary">{i18n.t('msg.noRecordsFound')}</Alert>
                             </Col>
                         )}
                     </Row>
@@ -64,5 +66,27 @@ function CharacterList() {
         </AppContainer>
     );
 }
+
+function CharacterCard(props) {
+    const { character } = props;
+    return (
+        <Card className="card-item" style={{}}>
+            <ImageContainer
+                src={character.thumbnail}
+                width="275"
+                height="275"
+                className="card-item-image"
+                alt={character.name}
+            />
+            <CardBody>
+                <CardTitle>{character.name}</CardTitle>
+            </CardBody>
+        </Card>
+    );
+}
+
+CharacterCard.propTypes = {
+    character: PropTypes.object.isRequired
+};
 
 export default CharacterList;
