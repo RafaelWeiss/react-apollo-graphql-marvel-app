@@ -29,7 +29,7 @@ class InputContainer extends PureComponent {
 
 InputContainer.defaultProps = {
     showlabel: true,
-    required: true,
+    required: false,
     label: null,
     value: null,
     errors: null
