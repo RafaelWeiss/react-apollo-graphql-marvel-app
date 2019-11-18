@@ -3,9 +3,9 @@
 
 A example with React, GraphQL, React Apollo, Formik, Testing Library with Apollo MockProvider.
 
-## Page
+## App
 
-A page created by using: 
+A App created by using: 
 - React
 - React-Apollo
 - GraphQL
