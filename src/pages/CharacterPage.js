@@ -132,7 +132,6 @@ function CharacterForm(props) {
                                     <InputContainer
                                         value={values.description}
                                         onChange={handleChange}
-                                        required
                                         errors={errors.description}
                                         label={i18n.t('label.description')}
                                         name="description"
@@ -166,9 +165,10 @@ function CharacterSeries(props) {
         <>
             <h3 className="fontWhite">{i18n.t('title.series')}</h3>
             <ListGroup>
-                {character.series.map((serie, i) => {
-                    return <ListGroupItem key={`serie_${i}`}>{serie.name}</ListGroupItem>;
-                })}
+                {character.series &&
+                    character.series.map((serie, i) => {
+                        return <ListGroupItem key={`serie_${i}`}>{serie.name}</ListGroupItem>;
+                    })}
                 {_.isEmpty(character.series) && (
                     <ListGroupItem>{i18n.t('msg.noSeriesFound')}</ListGroupItem>
                 )}
