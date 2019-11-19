@@ -42,26 +42,26 @@ function CharacterList() {
                     value={searchTerms}
                     placeholder={i18n.t('placeholder.searchCharacters')}
                     showlabel={false}
-                    style={{ width: '250px', float: 'right' }}
+                    className="app-nav-bar-search"
                 />
             }>
             {characters && (
-                <CardDeck>
-                    <Row style={{ width: '100%' }}>
-                        {characters.map((character) => (
-                            <Col lg={4} md={4} sm={12} xl={3} key={character.id}>
-                                <Link to={`/character/${character.id}`}>
-                                    <CharacterCard character={character} />
-                                </Link>
-                            </Col>
-                        ))}
-                        {_.isEmpty(characters) && (
-                            <Col md={12}>
-                                <Alert color="secondary">{i18n.t('msg.noRecordsFound')}</Alert>
-                            </Col>
-                        )}
-                    </Row>
-                </CardDeck>
+                <>
+                    <CardDeck>
+                        <Row style={{ width: '100%' }}>
+                            {characters.map((character) => (
+                                <Col lg={4} md={4} sm={12} xl={3} key={character.id}>
+                                    <Link to={`/character/${character.id}`}>
+                                        <CharacterCard character={character} />
+                                    </Link>
+                                </Col>
+                            ))}
+                        </Row>
+                    </CardDeck>
+                    {_.isEmpty(characters) && (
+                        <Alert color="secondary">{i18n.t('msg.noRecordsFound')}</Alert>
+                    )}
+                </>
             )}
         </AppContainer>
     );

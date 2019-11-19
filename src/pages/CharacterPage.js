@@ -41,7 +41,7 @@ function CharacterPage(props) {
         <AppContainer
             loading={loading}
             customComponent={
-                <Link to="/" style={{ float: 'right' }}>
+                <Link to="/" className="app-link-go-back">
                     &lt;&nbsp;
                     {i18n.t('button.goBack')}
                 </Link>

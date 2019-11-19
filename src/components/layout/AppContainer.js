@@ -9,11 +9,13 @@ const AppContainer = (props) => {
 
     return (
         <div className="app-container">
-            <Navbar color="light" light expand="md" fixed="top" className="navBar">
-                <NavbarBrand href="/" style={{ marginTop: '5px' }}>
-                    {i18n.t('title.appName')}
-                </NavbarBrand>
-                <div style={{ width: '100%' }}>{customComponent}</div>
+            <Navbar color="light" light expand="md" fixed="top" className="app-nav-bar">
+                <div className="app-nav-bar-limit">
+                    <NavbarBrand href="/" style={{ marginTop: '5px' }}>
+                        {i18n.t('title.appName')}
+                    </NavbarBrand>
+                    <div style={{ width: '100%' }}>{customComponent}</div>
+                </div>
             </Navbar>
             <div className="app">{loading ? <LoadingContainer /> : children}</div>
         </div>
